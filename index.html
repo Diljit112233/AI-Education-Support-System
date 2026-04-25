@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Education Support System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{display:flex;min-height:100vh;background:linear-gradient(135deg,#1e1e2f,#2c5364);color:#fff;}
+
+.sidebar{
+width:250px;background:#111;padding:20px;position:fixed;height:100%;
+}
+.sidebar h2{text-align:center;margin-bottom:20px;}
+.sidebar a{
+display:block;padding:10px;margin:10px 0;color:#fff;text-decoration:none;border-radius:5px;cursor:pointer;
+}
+.sidebar a:hover{background:#2c5364;}
+
+.main{margin-left:250px;padding:20px;width:100%;}
+.section{display:none;}
+.active{display:block;}
+
+.card{
+background:#fff;color:#333;padding:20px;border-radius:10px;margin-bottom:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.3);
+}
+
+button{
+padding:10px 15px;border:none;border-radius:5px;background:#2c5364;color:#fff;cursor:pointer;
+}
+button:hover{background:#1e90ff;}
+
+.option{margin:8px 0;}
+
+table{width:100%;border-collapse:collapse;}
+th,td{padding:10px;border-bottom:1px solid #ddd;}
+
+.progress{background:#ddd;border-radius:20px;overflow:hidden;}
+.progress-bar{height:10px;background:green;}
+.old-bar{background:red;}
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2>AI Education Support System</h2>
+<a onclick="showSection('home')">Home</a>
+<a onclick="showSection('quiz')">Quiz</a>
+<a onclick="showSection('performance')">Performance</a>
+<a onclick="showSection('notes')">Notes</a>
+<a onclick="showSection('about')">About</a>
+</div>
+
+<div class="main">
+
+<!-- DASHBOARD -->
+<div id="home" class="section active">
+<div class="card">
+<h2>Dashboard</h2>
+
+<p id="userScore">No test given yet</p>
+
+<h3>New Score</h3>
+<div class="progress">
+<div id="newBar" class="progress-bar" style="width:0%"></div>
+</div>
+
+<h3>Previous Score</h3>
+<div class="progress">
+<div id="oldBar" class="progress-bar old-bar" style="width:0%"></div>
+</div>
+
+</div>
+</div>
+
+<!-- QUIZ (UNCHANGED) -->
+<div id="quiz" class="section">
+<div class="card">
+<h2>Quiz</h2>
+<div id="quiz-container"></div>
+<button onclick="submitQuiz()">Submit</button>
+<div id="result"></div>
+</div>
+</div>
+
+<!-- PERFORMANCE -->
+<div id="performance" class="section">
+<div class="card">
+<h2>Performance</h2>
+<table>
+<thead>
+<tr><th>Name</th><th>Marks</th><th>Percentage</th></tr>
+</thead>
+<tbody id="performanceTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- NOTES -->
+<div id="notes" class="section">
+<div class="card">
+<h2>Study Notes</h2>
+
+<p>
+Artificial Intelligence (AI) is the simulation of human intelligence processes by machines. 
+It includes learning, reasoning, and self-correction. AI plays an important role in modern 
+technology such as chatbots, recommendation systems, and automation tools.
+</p>
+
+<p>
+Machine Learning (ML) is a subset of AI where machines learn from data instead of being 
+explicitly programmed. It allows systems to improve performance over time.
+</p>
+
+<p>
+HTML (HyperText Markup Language) is used to create the structure of web pages. It defines 
+elements like headings, paragraphs, links, and images.
+</p>
+
+<p>
+CSS (Cascading Style Sheets) is used for styling web pages. It controls layout, colors, 
+fonts, and spacing, making websites visually appealing.
+</p>
+
+<p>
+JavaScript is a programming language used to make web pages interactive. It allows dynamic 
+content updates, animations, and user interaction.
+</p>
+
+<p>
+An algorithm is a step-by-step procedure to solve a problem. Efficient algorithms improve 
+performance and reduce time complexity.
+</p>
+
+<p>
+Data structures like arrays, stacks, queues, and trees help organize data efficiently.
+Understanding them is crucial for problem-solving.
+</p>
+
+<p>
+Computer networks allow devices to communicate and share data. The internet is the largest 
+network connecting millions of devices worldwide.
+</p>
+
+<p>
+Cybersecurity is important to protect systems from attacks. Strong passwords and secure 
+coding practices help prevent data breaches.
+</p>
+
+<p>
+Databases store and manage data efficiently. SQL is commonly used to interact with databases.
+</p>
+
+<p>
+Cloud computing allows storage and computing over the internet. Services like AWS and Azure 
+provide scalable solutions.
+</p>
+
+<p>
+Software development involves planning, coding, testing, and maintaining applications. 
+Following best practices ensures quality software.
+</p>
+
+<p>
+Practice regularly, revise concepts, and solve problems daily to improve your skills. 
+Consistency is the key to mastering programming and AI concepts.
+</p>
+
+<p>
+(Repeat reading, revise concepts, and practice regularly. Learning is a continuous process 
+that improves with time and effort. Keep exploring new technologies and stay curious.)
+</p>
+
+</div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="section">
+<div class="card">
+<h2>About</h2>
+<p>This system helps students learn through quizzes and performance tracking.</p>
+</div>
+</div>
+
+</div>
+
+<script>
+
+function showSection(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+// QUIZ (UNCHANGED)
+const quizData=[
+{q:"What is Artificial Intelligence?",o:["Machine learning","Simulation of human intelligence","Coding","Hardware"],a:1,e:"AI simulates human intelligence."},
+{q:"CPU stands for?",o:["Central Process Unit","Central Processing Unit","Computer Unit","Control Unit"],a:1,e:"CPU means Central Processing Unit."},
+{q:"Machine Learning is?",o:["Manual coding","Learning from data","Hardware","Database"],a:1,e:"ML learns from data."},
+{q:"HTML stands for?",o:["Hyper Text Markup Language","High Text Machine","Hyperlinks","None"],a:0,e:"HTML is Hyper Text Markup Language."},
+{q:"CSS is used for?",o:["Structure","Styling","Logic","Database"],a:1,e:"CSS styles web pages."},
+{q:"JavaScript is used for?",o:["Styling","Structure","Interactivity","Database"],a:2,e:"JS adds interactivity."},
+{q:"Which is input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,e:"Keyboard is input device."},
+{q:"Which is output device?",o:["Mouse","Keyboard","Monitor","Scanner"],a:2,e:"Monitor is output device."},
+{q:"What is algorithm?",o:["Program","Step-by-step solution","Hardware","Language"],a:1,e:"Algorithm is step-by-step solution."},
+{q:"Which language is for web?",o:["Python","HTML","C","Java"],a:1,e:"HTML is used for web."}
+];
+
+const container=document.getElementById('quiz-container');
+quizData.forEach((q,i)=>{
+let html=`<p><b>${i+1}. ${q.q}</b></p>`;
+q.o.forEach((opt,j)=>{
+html+=`<div class='option'><input type='radio' name='q${i}' value='${j}'> ${opt}</div>`;
+});
+container.innerHTML+=html;
+});
+
+function submitQuiz(){
+let score=0;
+
+quizData.forEach((q,i)=>{
+let selected=document.querySelector(`input[name=q${i}]:checked`);
+if(selected && parseInt(selected.value)===q.a) score++;
+});
+
+let percentage=(score/quizData.length)*100;
+
+// old score
+let oldData=JSON.parse(localStorage.getItem("latestResult"));
+let oldScore=oldData ? oldData.percentage : 0;
+
+// save new
+localStorage.setItem("latestResult",JSON.stringify({percentage:percentage}));
+
+// update UI
+document.getElementById("userScore").innerText="Score: "+score+"/10 ("+percentage+"%)";
+document.getElementById("newBar").style.width=percentage+"%";
+document.getElementById("oldBar").style.width=oldScore+"%";
+
+// update table
+document.getElementById("performanceTable").innerHTML=
+`<tr><td>You</td><td>${score}</td><td>${percentage}%</td></tr>`;
+}
+
+window.onload=function(){
+let data=JSON.parse(localStorage.getItem("latestResult"));
+if(data){
+document.getElementById("oldBar").style.width=data.percentage+"%";
+}
+};
+
+</script>
+
+</body>
+</html>
